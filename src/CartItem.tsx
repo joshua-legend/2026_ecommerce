@@ -1,12 +1,9 @@
 "use client";
 
 import { qtyAdd, qtySub, removeToCart } from "@/utils/hooks";
-import { useState } from "react";
 import { TCartItem } from "./Item";
 
 const CartItem = ({ id = 0, emoji = "🚬", name = "아이템", price = 1000, count = 1 }: Partial<TCartItem>) => {
-  const [cnt, setCnt] = useState<number>(count);
-
   const remove = () => {
     removeToCart({ id, emoji, name, price });
   };
@@ -16,7 +13,9 @@ const CartItem = ({ id = 0, emoji = "🚬", name = "아이템", price = 1000, co
       <div className="flex gap-1">
         <div className="flex items-center">{emoji}</div>
         <div className="flex flex-col">
-          <div>{name}</div>
+          <div>
+            {name} {price}
+          </div>
           <div className="flex justify-between items-center">
             <button
               onClick={() => {
@@ -26,7 +25,7 @@ const CartItem = ({ id = 0, emoji = "🚬", name = "아이템", price = 1000, co
             >
               -
             </button>
-            <span>{cnt}</span>
+            <span>{count}</span>
             <button
               onClick={() => {
                 qtyAdd({ id, emoji, name, price, count });
@@ -40,7 +39,7 @@ const CartItem = ({ id = 0, emoji = "🚬", name = "아이템", price = 1000, co
       </div>
       <div>
         <div onClick={remove}>삭제</div>
-        <div>{price * cnt}</div>
+        <div>{price * count}</div>
       </div>
     </article>
   );
