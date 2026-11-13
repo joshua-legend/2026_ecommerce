@@ -1,27 +1,19 @@
 "use client";
 
-type ItemProps = {
+import { addToCart } from "@/utils/hooks";
+
+export type ItemProps = {
   id: number;
   emoji: string;
   name: string;
   price: string | number;
 };
 
-export type CartItem = ItemProps & { count: number };
+export type TCartItem = ItemProps & { count: number };
 
-const Item = ({ id, emoji = "", name = "이름없음", price = 0 }: Partial<ItemProps>) => {
+const Item = ({ id = 0, emoji = "", name = "이름없음", price = 0 }: Partial<ItemProps>) => {
   const add = () => {
-    if (id == null) return;
-    const cart = window.localStorage.getItem("cart");
-    const data: CartItem[] = cart ? JSON.parse(cart) : [];
-    const found = data.find((v) => v.id == id);
-    if (found) {
-      found.count += 1;
-    } else {
-      data.push({ id, emoji, name, price, count: 1 });
-    }
-    window.localStorage.setItem("cart", JSON.stringify(data));
-    window.dispatchEvent(new Event("cart-change"));
+    addToCart({ id, emoji, name, price });
   };
 
   return (
