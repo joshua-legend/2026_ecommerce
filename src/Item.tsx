@@ -6,7 +6,7 @@ export type ItemProps = {
   id: number;
   emoji: string;
   name: string;
-  price: string | number;
+  price: number;
 };
 
 export type TCartItem = ItemProps & { count: number };
